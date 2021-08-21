@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<title>Javascript Test</title>
+	</head>
+	<body>
+		<button id="btn">ボタン</button>
+		<ul id="disp"></ul>
+		<script src="data.js"></script>
+		<script type="text/javascript">
+		const today = new Date();
+		const year = today.getFullYear();
+		const month = today.getMonth();
+		const date = today.getDate();
+		const articles = articleArray();
+
+		(function createBlog(){
+			const disp=document.getElementById('disp');
+			let start_date = new Date();
+			let end_date = new Date();
+			for(let i=0;i<articles.length;i++){
+				const start = articles[i].start.split('/');
+				const end = articles[i].end.split('/');
+				start_date = new Date(start[0],start[1]-1,start[2]);
+				end_date = new Date(end[0],end[1]-1,end[2]);
+				console.log(start_date);
+
+				if(today>=start_date && today <= end_date){
+					createSection(articles[i].title,articles[i].content);
+				}
+			}
+		})();
+
+		function createSection(title,content){
+			let section=document.createElement('section');
+				let h3=document.createElement('h3');
+				h3.textContent=title;
+				let p = document.createElement('p');
+				p.innerHTML=content;
+				section.appendChild(h3);
+				section.appendChild(p);
+				disp.appendChild(section);
+		}
+		</script>
+	</body>
+</html>
